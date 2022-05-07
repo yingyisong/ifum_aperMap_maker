@@ -150,9 +150,10 @@ def main(args):
         else:
             os.system('pypeit_trace_edges -t '+traceFile+' -s magellan_m2fs_blue')
 
-            path_MasterEdges_default = dir_new+'/Masters/MasterEdges_A_1_01.fits.gz'
+            #path_MasterEdges_default = dir_new+'/Masters/MasterEdges_A_1_01.fits.gz'
+            path_MasterEdges_default = dir_new+'/Masters/MasterEdges_A_1_DET01.fits.gz'
             os.system('mv '+path_MasterEdges_default+' '+path_MasterEdges)
-            path_MasterSlits_default = dir_new+'/Masters/MasterSlits_A_1_01.fits.gz'
+            path_MasterSlits_default = dir_new+'/Masters/MasterSlits_A_1_DET01.fits.gz'
             os.system('mv '+path_MasterSlits_default+' '+path_MasterSlits)
         print('++++ Done Step 2 \n')
 
