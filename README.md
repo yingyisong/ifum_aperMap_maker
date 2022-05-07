@@ -3,8 +3,8 @@
 Require: PypeIt_m2fs (forked from https://pypeit.readthedocs.io/en/release/index.html)
 
 Install PypeIt_m2fs:
-
 ```sh
+# Setup a clean python environment (recommend)
 conda create -n pypeit_m2fs python=3.9
 conda activate pypeit_m2fs
 
