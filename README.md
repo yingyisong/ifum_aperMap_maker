@@ -1,6 +1,6 @@
 # ifum_aperMap_maker
 
-Require: PypeIt_m2fs (forked from https://pypeit.readthedocs.io/en/release/index.html)
+Require: PypeIt_m2fs (forked from https://pypeit.readthedocs.io/en/release/index.html, v1.8.2dev)
 
 Install PypeIt_m2fs:
 ```sh
