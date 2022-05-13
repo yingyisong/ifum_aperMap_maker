@@ -1,0 +1,14 @@
+IFU type = LSB
+File number = 0184
+Config = 1x2_Halpha_Li_0184
+Working path = /Users/yysong/git2/ifum_aperMap_example
+Raw data dir = data_raw
+Packed data dir = data_packed
+AperMap dir = aperMap
+Image mask = YES
+Image mask path = /Users/yysong/git2/ifum_aperMap_example/img_mask
+Image mask name = LSB_1x2_Halpha_Li
+Badfibers b-side = NO
+Badfibers b-side positions = 170
+Badfibers r-side = NO
+Badfibers r-side positions = 2150

@@ -1,0 +1,14 @@
+IFU type = STD
+File number = 0202
+Config = ConfigTest_v1_2x2
+Working path = /Users/yysong/git2/ifum_aperMap_example
+Raw data dir = data_raw
+Packed data dir = data_packed
+AperMap dir = aperMap
+Image mask = NO
+Image mask path = /Users/yysong/git2/ifum_aperMap_example/img_mask
+Image mask name = Config1_m2fs
+Badfibers b-side = NO
+Badfibers b-side positions = 982, 1173, 1960
+Badfibers r-side = NO
+Badfibers r-side positions = 1395, 1414, 1972, 1982

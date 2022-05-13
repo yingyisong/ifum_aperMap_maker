@@ -170,6 +170,7 @@ def pack_4fits(name_file,dir_input,dir_output,flag_img_mask,path_img_mask,config
     ##     hdr_full['EXPTYPE'] = 'Lamp-ThArNe'
     ## elif (hdr_full['OBJECT']=='Twilight Config 1'):
     ##     hdr_full['EXPTYPE'] = 'Twilight'
+    hdr_full['BINNING'] = ('1x1', 'binning') # added by YYS on May 11, 2022
 
     hdul_full.writeto(dir_output+'/'+name_file+'.fits',overwrite=True)
 
@@ -185,7 +186,7 @@ def write_aperMap(path_MasterSlits, IFU_type, Channel, file_name, file_date, N_x
     nspec = int(hdr['NSPEC']) ### binning?
     nspat = int(hdr['NSPAT'])
     map_ap = np.zeros((nspat,nspec), dtype=np.int32)
-    num_ap = np.zeros(N_ap, dtype=np.int32)
+    print('nspat, nspec=',nspat,nspec)
     print('Note: %d out of %d fibers are found by pypeit_trace_edges.'%(N_sl,N_ap))
 
     if (add_badfiber_flag):
@@ -212,8 +213,28 @@ def write_aperMap(path_MasterSlits, IFU_type, Channel, file_name, file_date, N_x
                     ap_y2 = int(np.round(data[i_temp]['right_init'][x_temp]))
                     map_ap[ap_y1:ap_y2, x_temp] = np.int32(ap_num)
             else:
-                map_ap[spat_id_temp-2:spat_id_temp+1, int(nspec/2)-2:int(nspec/2)+1] = np.int32(ap_num)
+                #map_ap[spat_id_temp-2:spat_id_temp+1, int(nspec/2)-2:int(nspec/2)+1] = np.int32(ap_num)
+                #print("!!!!!!", spat_id_temp-2, spat_id_temp+1, int(nspec/2)-2, int(nspec/2)+1)
 
+                d1_spat_id = spat_id_temp - spat_id_new[i_ap-1]
+                d2_spat_id = spat_id_new[i_ap+1] - spat_id_temp
+                print(d1_spat_id, d2_spat_id)
+                if d1_spat_id>d2_spat_id:
+                    temp_index = np.where(spat_id_raw==spat_id_new[i_ap+1])[0]
+                    if len(temp_index)==1:
+                        i_temp = temp_index[0]
+                        for x_temp in range(nspec):
+                            ap_y1 = int(np.round(data[i_temp]['left_init'][x_temp]-1))
+                            ap_y2 = int(np.round(data[i_temp]['right_init'][x_temp]))
+                            map_ap[ap_y1-d2_spat_id:ap_y2-d2_spat_id, x_temp] = np.int32(ap_num)
+                else:
+                    temp_index = np.where(spat_id_raw==spat_id_new[i_ap-1])[0]
+                    if len(temp_index)==1:
+                        i_temp = temp_index[0]
+                        for x_temp in range(nspec):
+                            ap_y1 = int(np.round(data[i_temp]['left_init'][x_temp]-1))
+                            ap_y2 = int(np.round(data[i_temp]['right_init'][x_temp]))
+                            map_ap[ap_y1+d1_spat_id:ap_y2+d1_spat_id, x_temp] = np.int32(ap_num)
     else:
         if N_ap>N_sl:
             print('!!! Warning: Missing %d fiber(s). !!!'%(N_ap-N_sl))
@@ -233,8 +254,9 @@ def write_aperMap(path_MasterSlits, IFU_type, Channel, file_name, file_date, N_x
         map_ap = mask_img(map_ap, file_img_mask)
 
     ####
+    num_ap = np.zeros(N_ap, dtype=np.int32)
     for i_ap in range(N_ap):
-        num_ap[i_ap] = np.sum(map_ap==ap_num)
+        num_ap[i_ap] = np.sum(map_ap==i_ap+1)
     num_max = np.max(num_ap)
 
     #plt.imshow(map_ap, origin='lower')

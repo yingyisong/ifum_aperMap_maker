@@ -27,9 +27,9 @@ def readString_symbol(fileName, column1, symbol): #column number starts from 0
 def str2bool(s):
     flag = False
     true_synonym = ['1','yes','Yes','YES','true','True','TRUE']
-
-    if np.sum(true_synonym==s)>0:
-        flag = True
+    for temp in true_synonym:
+        if s==temp:
+            flag = True
 
     return flag
 
@@ -92,7 +92,7 @@ def main(args):
     dir_aperMap = os.path.join(path_work, strs[np.where(keys=='AperMap dir')][0]) # homeDir+'/AperMap'
 
     #### have an image mask?
-    img_mask_flag = str2bool(strs[np.where(keys=='File number')][0]) # False #True
+    img_mask_flag = str2bool(strs[np.where(keys=='Image mask')][0]) # False #True
     if img_mask_flag:
         img_mask_path = strs[np.where(keys=='Image mask path')][0] # homeDir+'/img_mask'
         img_mask_name = strs[np.where(keys=='Image mask name')][0] # 'Config1_m2fs'
@@ -112,6 +112,7 @@ def main(args):
         add_badfiber_spat_id_r = np.array([np.int32(temp) for temp in strs[np.where(keys=='Badfibers r-side positions')][0].split(",")]) # np.array([1395, 1414, 1972, 1982])
     else:
         add_badfiber_spat_id_r = np.array([])
+    #print("!!!!!", add_badfiber_spat_id_r)
 
     #### IFU parameters
     if IFU_type=='LSB':
