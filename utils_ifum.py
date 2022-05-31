@@ -21,6 +21,38 @@ from astropy.stats import biweight
 #from scipy.interpolate import UnivariateSpline
 #import scipy.integrate as integrate
 
+def readString_symbol(fileName, column1, symbol): #column number starts from 0
+    x0 = []
+    for line in open(fileName, 'r'):
+        #skip over empty lines or lines starting with spaces or spaces+#
+        tempString=line.strip()
+        if (tempString[0] == '#' or tempString[0]==''):
+            continue
+
+        line = line.split(symbol)
+        if line[column1]=='-':
+            line[column1]=float('nan')
+
+        x = line[column1].strip()
+        x0.append(x)
+    return np.array(x0)
+
+def readFloat_space(fileName, column1): #column number starts from 0
+    x0 = []
+    for line in open(fileName, 'r'):
+        #skip over empty lines or lines starting with spaces or spaces+#
+        tempString=line.strip()
+        if (tempString[0] == '#' or tempString[0]==' '):
+            continue
+
+        line = line.split()
+        if line[column1]=='-':
+            line[column1]=float('nan')
+
+        x = np.float64(line[column1])
+        x0.append(x)
+    return np.array(x0, dtype='float64')
+
 def mask_img(raw_data,mask_file):
     new_data = np.zeros_like(raw_data)
     for line in open(mask_file,'r'):

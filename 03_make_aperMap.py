@@ -7,22 +7,8 @@ This script runs make_aperMap
 
 import os
 import numpy as np
-
-def readString_symbol(fileName, column1, symbol): #column number starts from 0
-    x0 = []
-    for line in open(fileName, 'r'):
-        #skip over empty lines or lines starting with spaces or spaces+#
-        tempString=line.strip()
-        if (tempString[0] == '#' or tempString[0]==''):
-            continue
-
-        line = line.split(symbol)
-        if line[column1]=='-':
-            line[column1]=float('nan')
-
-        x = line[column1].strip()
-        x0.append(x)
-    return np.array(x0)
+import time
+from utils_ifum import pack_4fits, write_aperMap, readString_symbol
 
 def str2bool(s):
     flag = False
@@ -69,12 +55,10 @@ def parse_args(options=None, return_parser=False):
     return parser.parse_args() if options is None else parser.parse_args(options)
 
 def main(args):
-    import time
-    from utils_ifum import pack_4fits, write_aperMap
 
-    print('Hello Yingyi')
+    #print('Hello Yingyi')
+    #homeDir = os.getcwd()
 
-    homeDir = os.getcwd()
     current_time = time.localtime()
     file_date = '%02d%02d%02d'%(current_time.tm_year%100,current_time.tm_mon,current_time.tm_mday)
 
@@ -90,6 +74,8 @@ def main(args):
     dir_raw = os.path.join(path_work, strs[np.where(keys=='Raw data dir')][0]) # homeDir+'/data_raw'
     dir_new = os.path.join(path_work, strs[np.where(keys=='Packed data dir')][0]) # homeDir+'/data_packed'
     dir_aperMap = os.path.join(path_work, strs[np.where(keys=='AperMap dir')][0]) # homeDir+'/AperMap'
+
+    dir_pypeit = strs[np.where(keys=='PypeIt file dir')][0]
 
     #### have an image mask?
     img_mask_flag = str2bool(strs[np.where(keys=='Image mask')][0]) # False #True
@@ -140,6 +126,7 @@ def main(args):
         print('++++ Done Step 1: %s\n'%file_name_temp)
 
         #### step 2
+        pypeitFile = dir_pypeit+'/%s_%s_%s.pypeit'%(IFU_type,Config,Shoe)
         traceFile = dir_new+'/'+file_name_temp+'.fits'
 
         path_MasterEdges = dir_new+'/Masters/MasterEdges_%s.fits.gz'%(file_name_temp)
@@ -149,12 +136,16 @@ def main(args):
         if os.path.exists(path_MasterSlits):
             print("Caution: MasterSlits file exists!!! Continue to Step 3.")
         else:
-            os.system('pypeit_trace_edges -t '+traceFile+' -s magellan_m2fs_blue')
+            #os.system('pypeit_trace_edges -t '+traceFile+' -s magellan_m2fs_blue')
+            #os.system('pypeit_trace_edges -t %s -s magellan_m2fs_blue'%traceFile)
+            os.system('pypeit_trace_edges -f %s -s magellan_m2fs_blue'%pypeitFile)
 
             #path_MasterEdges_default = dir_new+'/Masters/MasterEdges_A_1_01.fits.gz'
-            path_MasterEdges_default = dir_new+'/Masters/MasterEdges_A_1_DET01.fits.gz'
+            #path_MasterEdges_default = dir_new+'/Masters/MasterEdges_A_1_DET01.fits.gz'
+            #path_MasterSlits_default = dir_new+'/Masters/MasterSlits_A_1_DET01.fits.gz'
+            path_MasterEdges_default = dir_pypeit+'/Masters/MasterEdges_A_1_DET01.fits.gz'
+            path_MasterSlits_default = dir_pypeit+'/Masters/MasterSlits_A_1_DET01.fits.gz'
             os.system('mv '+path_MasterEdges_default+' '+path_MasterEdges)
-            path_MasterSlits_default = dir_new+'/Masters/MasterSlits_A_1_DET01.fits.gz'
             os.system('mv '+path_MasterSlits_default+' '+path_MasterSlits)
         print('++++ Done Step 2 \n')
 

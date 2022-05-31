@@ -1,0 +1,15 @@
+IFU type = HR
+File number = 0339
+Config = Mgb_RevB_0339
+Working path = /Users/yysong/git2/ifum_aperMap_example
+Raw data dir = data_raw/ut20220513
+Packed data dir = data_packed
+AperMap dir = aperMap
+PypeIt file dir = /Users/yysong/git2/ifum_aperMap_maker/pypeit_file
+Image mask = YES
+Image mask path = /Users/yysong/git2/ifum_aperMap_example/img_mask
+Image mask name = HR_2x1_Mgb_RevB
+Badfibers b-side = NO
+Badfibers b-side positions = 170
+Badfibers r-side = NO
+Badfibers r-side positions = 2150

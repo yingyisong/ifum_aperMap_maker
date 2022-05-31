@@ -1,0 +1,107 @@
+# Auto-generated PypeIt file
+# Tue 15 Jun 2021 19:12:52
+
+# User-defined execution parameters
+[rdx]
+spectrograph = magellan_m2fs_blue
+[baseprocess]
+    use_overscan = False
+    use_pixelflat = False
+    use_illumflat = False
+    spat_flexure_correct = False
+    cr_sigrej = -1
+    mask_cr = False    
+[calibrations]
+    [[biasframe]]
+        [[[process]]]
+            apply_gain = False
+            combine = median
+            use_biasimage = False
+            use_overscan = False
+            use_pixelflat = False
+            use_illumflat = False
+    [[darkframe]]
+        exprng = 20, None
+        [[[process]]]
+            apply_gain = False
+            use_biasimage = False
+            use_overscan = False
+            use_pixelflat = False
+            use_illumflat = False
+    [[arcframe]]
+        exprng = 20, None
+        [[[process]]]
+            cr_sigrej = -1
+            use_overscan = False
+            use_pixelflat = False
+            use_illumflat = False
+    [[tiltframe]]
+        [[[process]]]
+            cr_sigrej = -1
+            use_overscan = False
+            use_pixelflat = False
+            use_illumflat = False
+            spat_flexure_correct = False 
+    [[alignframe]]
+        [[[process]]]
+            satpix = nothing
+            cr_sigrej = -1
+            use_overscan = False
+            use_pixelflat = False
+            use_illumflat = False
+    [[traceframe]]
+        [[[process]]]
+            use_overscan = False
+            use_pixelflat = False
+            use_illumflat = False
+    [[slitedges]]
+        add_slits = 1:1024:979:985,1:1024:1170:1176,1:1024:1957:1963
+    [[wavelengths]]
+        lamps = ['ThAr']
+    [[tilts]]
+        tracethresh = 10.0
+[reduce]
+    [[cube]]
+        slit_spec = False
+    [[extraction]]
+        skip_optimal = True
+        boxcar_radius = 0.9
+        model_full_slit = True
+    [[findobj]]
+        find_cont_fit = False
+        skip_second_find = True 
+        find_fwhm = 4.0
+        sig_thresh = 1.0
+        find_trim_edge = 0,0
+        maxnumber = 1
+    [[skysub]]
+        global_sky_std = False
+        no_local_sky = True
+        no_poly = True
+        mask_by_boxcar = True
+[scienceframe]
+    exprng = 20, None
+    [[process]]
+        satpix = nothing
+        sigclip = 20.0
+        use_overscan = False
+        cr_sigrej = -1
+        mask_cr = False
+        
+
+# Setup
+setup read
+    Setup A:
+setup end
+
+# Read in the data
+data read
+ path /Users/yysong/Desktop/IFUM/M2FS_LMCC_ut20151115/Raw_pack/b-side
+|   filename |                 frametype |          ra |         dec |                     target | dispname | decker | binning |                mjd | airmass | exptime |
+| bbias.fits |                      bias |      251.25 |       -30.0 |                       Bias |    HiRes | 180 um |     2,2 |   56704.4080787037 |   1.103 |     0.0 |
+| bdark.fits |                      dark |  273.982486 |  -29.016906 |                       Dark |    HiRes | 180 um |     2,2 |  57009.71574074074 |     1.0 |  3600.0 |
+| b0228.fits |                     trace |    81.15675 | -69.8360556 | Song_N15 Cole Field Quartz |    HiRes | 180 um |     2,2 |  57341.31730324074 |   1.343 |    90.0 |
+| b0250.fits |                  arc,tilt |       165.0 | -39.9999722 |   Twilight Config 1 ThArNe |    HiRes | 180 um |     2,2 | 57341.389502314814 |   1.227 |    20.0 |
+| b0252.fits |             align,science | 165.0000417 | -39.9999722 |          Twilight Config 1 |    HiRes | 180 um |     2,2 |  57341.39208333333 |   1.216 |    70.0 |
+data end
+

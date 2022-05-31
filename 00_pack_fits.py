@@ -6,7 +6,7 @@ from utils_ifum import pack_4fits
 def main(argv, arc):
     file_num = argv[1] #"0164"
     work_dir = "/Users/yysong/git2/ifum_aperMap_example"
-    dir_raw = os.path.join(work_dir,"data_raw/ut20220512")
+    dir_raw = os.path.join(work_dir,"data_raw/ut20220513")
     dir_new = os.path.join(work_dir,"data_packed")
     img_mask_flag = False
     img_mask_path = 'None'

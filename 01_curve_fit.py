@@ -61,9 +61,10 @@ def main(argv, arc):
         fname = side + fnum
 
         #### curve fit: x=a(y+b)^2+c
+        #path_dp = "%s/dp_%s.txt"%(path_tab,side+"M2FS")#fname)
         path_dp = "%s/dp_%s.txt"%(path_tab,fname)
-        x_dp = (2048-readFloat_space(path_dp,0))*2
-        y_dp = 2056-readFloat_space(path_dp,1)  ### caution!!!
+        x_dp = readFloat_space(path_dp,0) #(2048-readFloat_space(path_dp,0))*2
+        y_dp = readFloat_space(path_dp,1) #2056-readFloat_space(path_dp,1)  ### caution!!!
 
         N_dp = 8
         N_cf = np.int32(len(x_dp)/N_dp)

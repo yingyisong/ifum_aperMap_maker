@@ -1,0 +1,23 @@
+# Auto-generated PypeIt file
+# Tue 15 Jun 2021 19:12:52
+
+# User-defined execution parameters
+[rdx]
+spectrograph = magellan_m2fs_blue
+[calibrations]
+    [[slitedges]]
+        #add_slits = 1:1024:979:985,1:1024:1170:1176,1:1024:1957:1963
+        smash_range = 0.2,0.4
+
+# Setup
+setup read
+    Setup A:
+setup end
+
+# Read in the data
+data read
+ path /Users/yysong/git2/ifum_aperMap_example/data_packed
+|   filename |                 frametype |          ra |         dec |                     target | dispname | decker | binning |                mjd | airmass | exptime |
+| r0339.fits |                     trace |    81.15675 | -69.8360556 | Song_N15 Cole Field Quartz |    HiRes | 180 um |     1,1 |  57341.31730324074 |   1.343 |    90.0 |
+data end
+
